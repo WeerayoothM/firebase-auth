@@ -1,3 +1,9 @@
+db.collection("guides")
+  .get()
+  .then((snapshot) => {
+    setupGuides(snapshot);
+  });
+
 // listen for auth status changes
 auth.onAuthStateChanged((user) => {
   if (user) {
