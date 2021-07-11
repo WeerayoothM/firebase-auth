@@ -1,15 +1,24 @@
-db.collection("guides")
-  .get()
-  .then((snapshot) => {
-    setupGuides(snapshot);
-  });
+// set Secure rule in firebase
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /guides/{guideId} {
+//     	allow read, write: if request.auth.uid != null;
+//     }
+//   }
+// }
 
 // listen for auth status changes
 auth.onAuthStateChanged((user) => {
   if (user) {
-    console.log("user logged in: ", user);
+    db.collection("guides")
+      .get()
+      .then((snapshot) => {
+        setupGuides(snapshot);
+      });
   } else {
     console.log("user logged out");
+    setupGuides([]);
   }
 });
 
