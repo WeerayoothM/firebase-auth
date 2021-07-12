@@ -9,15 +9,17 @@
 // }
 
 // listen for auth status changes
+// listen for auth status changes
 auth.onAuthStateChanged((user) => {
   if (user) {
     db.collection("guides")
       .get()
       .then((snapshot) => {
-        setupGuides(snapshot);
+        setupGuides(snapshot.docs);
+        setupUI(user);
       });
   } else {
-    console.log("user logged out");
+    setupUI();
     setupGuides([]);
   }
 });
