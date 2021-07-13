@@ -9,15 +9,13 @@
 // }
 
 // listen for auth status changes
-// listen for auth status changes
 auth.onAuthStateChanged((user) => {
   if (user) {
-    db.collection("guides")
-      .get()
-      .then((snapshot) => {
-        setupGuides(snapshot.docs);
-        setupUI(user);
-      });
+    // onsnapshot is a listener to the database
+    db.collection("guides").onSnapshot((snapshot) => {
+      setupGuides(snapshot.docs);
+      setupUI(user);
+    });
   } else {
     setupUI();
     setupGuides([]);
