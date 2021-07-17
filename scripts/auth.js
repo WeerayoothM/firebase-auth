@@ -97,6 +97,10 @@ signupForm.addEventListener("submit", (e) => {
       const modal = document.querySelector("#modal-signup");
       M.Modal.getInstance(modal).close();
       signupForm.reset();
+      signupForm.querySelector(".error").innerHTML = "";
+    })
+    .catch((err) => {
+      signupForm.querySelector(".error").innerHTML = err.message;
     });
 });
 
@@ -119,11 +123,17 @@ loginForm.addEventListener("submit", (e) => {
   const password = loginForm["login-password"].value;
 
   // log the user in
-  auth.signInWithEmailAndPassword(email, password).then((cred) => {
-    console.log(cred.user);
-    // close the signup modal & reset form
-    const modal = document.querySelector("#modal-login");
-    M.Modal.getInstance(modal).close();
-    loginForm.reset();
-  });
+  auth
+    .signInWithEmailAndPassword(email, password)
+    .then((cred) => {
+      console.log(cred.user);
+      // close the signup modal & reset form
+      const modal = document.querySelector("#modal-login");
+      M.Modal.getInstance(modal).close();
+      loginForm.reset();
+      loginForm.querySelector(".error").innerHTML = "";
+    })
+    .catch((err) => {
+      loginForm.querySelector(".error").innerHTML = err.message;
+    });
 });
